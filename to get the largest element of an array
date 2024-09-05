@@ -1,0 +1,8 @@
+arr=[25,4,79,2,4]
+max=arr[0]
+size=0
+for num in arr:
+    size+=1 
+    if num>max:
+        max=num
+print("max number",max)
