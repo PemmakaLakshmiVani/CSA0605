@@ -1,0 +1,15 @@
+def armstrong(n):
+    if n<=0:
+        return 0
+    sum=0
+    temp=n 
+    rem=temp%10
+    sum=sum+rem*rem*rem
+    temp=temp//10
+if temp==sum:
+    print(f"{n} it is a armstrong number.")
+else:
+    print(f"{n} it is not a armstrong number.")
+
+n=153
+armstrong(n)
