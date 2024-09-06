@@ -1,0 +1,12 @@
+def master_theorem(a, b, f_n):
+    if a < b**f_n(1):
+        return "O(" + str(f_n(1)) + ")"
+    elif a == b**f_n(1):
+        return "O(" + str(f_n(1)) + " log n)"
+    else:
+        return "O(" + str(a) + "^n)"
+
+a = 2
+b = 2
+f_n = lambda n: n
+print(master_theorem(a, b, f_n))  
