@@ -1,0 +1,19 @@
+def can_break(s1, s2):
+    if len(s1) != len(s2):
+        return False
+
+    s1_sorted = sorted(s1)
+    s2_sorted = sorted(s2)
+
+    can_break_s2 = all(x >= y for x, y in zip(s1_sorted, s2_sorted))
+    can_break_s1 = all(x >= y for x, y in zip(s2_sorted, s1_sorted))
+
+    return can_break_s1 or can_break_s2
+
+s1 = "abc"
+s2 = "xya"
+print(can_break(s1, s2))  
+
+s1 = "abc"
+s2 = "xyz"
+print(can_break(s1, s2))
