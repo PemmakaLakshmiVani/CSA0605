@@ -1,0 +1,37 @@
+def min_value(s):
+    n = len(s)
+    res = 0
+    last_occurrence = [-1] * 26  # last occurrence of each lowercase letter
+
+    for i in range(n):
+        if s[i] != '?':
+            idx = ord(s[i]) - ord('a')
+            res += i - 1 - last_occurrence[idx]
+            last_occurrence[idx] = i
+
+    return res
+
+def replace_question_marks(s):
+    n = len(s)
+    res = list(s)
+    last_occurrence = [-1] * 26  # last occurrence of each lowercase letter
+
+    for i in range(n):
+        if s[i] == '?':
+            # find the letter that minimizes the cost
+            min_cost = float('inf')
+            min_letter = None
+            for j in range(26):
+                if last_occurrence[j] != -1:
+                    cost = i - 1 - last_occurrence[j]
+                    if cost < min_cost:
+                        min_cost = cost
+                        min_letter = chr(j + ord('a'))
+            res[i] = min_letter
+            last_occurrence[ord(min_letter) - ord('a')] = i
+
+    return ''.join(res)
+
+s = input("Enter a string: ")
+print("Minimum value:", min_value(s))
+print("Replaced string:", replace_question_marks(s))
