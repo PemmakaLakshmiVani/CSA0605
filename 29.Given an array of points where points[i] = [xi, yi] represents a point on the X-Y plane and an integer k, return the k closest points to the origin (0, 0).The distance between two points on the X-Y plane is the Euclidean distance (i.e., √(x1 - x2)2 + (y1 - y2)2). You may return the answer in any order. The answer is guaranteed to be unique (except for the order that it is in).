@@ -1,0 +1,12 @@
+import heapq
+
+def k_closest(points, k):
+    """
+    Given a list of points on the 2-D plane and an integer K, return the K closest points to the origin (0, 0).
+    """
+    return heapq.nsmallest(k, points, key=lambda x: x[0]**2 + x[1]**2)
+
+# Example usage:
+points = [[3, 3], [5, -1], [-2, 4]]
+k = 2
+print(k_closest(points, k))  # Output: [[3, 3], [-2, 4]]
