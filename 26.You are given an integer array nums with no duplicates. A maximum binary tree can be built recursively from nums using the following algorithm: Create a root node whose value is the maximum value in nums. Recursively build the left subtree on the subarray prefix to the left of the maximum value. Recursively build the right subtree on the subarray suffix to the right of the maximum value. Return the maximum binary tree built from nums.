@@ -1,0 +1,25 @@
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def construct_maximum_binary_tree(nums):
+    """
+    Given an integer array nums with no duplicates, build a maximum binary tree recursively.
+    """
+    if not nums:
+        return None
+
+    max_val = max(nums)
+    max_idx = nums.index(max_val)
+
+    root = TreeNode(max_val)
+    root.left = construct_maximum_binary_tree(nums[:max_idx])
+    root.right = construct_maximum_binary_tree(nums[max_idx + 1:])
+
+    return root
+
+# Example usage:
+nums = [3, 2, 1, 6, 0, 5]
+root = construct_maximum_binary_tree(nums)
