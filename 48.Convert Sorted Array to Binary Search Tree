@@ -1,0 +1,43 @@
+class TreeNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+
+class Solution:
+    def sortedArrayToBST(self, nums: List[int]) -> TreeNode:
+        """
+        Converts a sorted array to a height-balanced binary search tree.
+
+        Args:
+            nums (List[int]): The sorted array.
+
+        Returns:
+            TreeNode: The root of the binary search tree.
+        """
+        if not nums:
+            return None
+
+        mid = len(nums) // 2
+        root = TreeNode(nums[mid])
+        root.left = self.sortedArrayToBST(nums[:mid])
+        root.right = self.sortedArrayToBST(nums[mid+1:])
+
+        return root
+
+# Example usage
+def printTree(root, level=0):
+    if root:
+        printTree(root.right, level + 1)
+        print('  ' * level + str(root.val))
+        printTree(root.left, level + 1)
+
+# Create the input array
+nums = [-10, -3, 0, 5, 9]
+
+# Convert the array to a binary search tree
+solution = Solution()
+root = solution.sortedArrayToBST(nums)
+
+# Print the binary search tree
+printTree(root)
