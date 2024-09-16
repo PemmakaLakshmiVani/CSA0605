@@ -1,0 +1,59 @@
+class FirstUnique:
+    def __init__(self, nums: List[int]):
+        """
+        Initializes the FirstUnique class with a list of numbers.
+
+        Args:
+            nums (List[int]): The list of numbers.
+        """
+        self.nums_count = {}
+        self.unique_nums = []
+
+        for num in nums:
+            if num not in self.nums_count:
+                self.nums_count[num] = 1
+                self.unique_nums.append(num)
+            else:
+                self.nums_count[num] += 1
+                if num in self.unique_nums:
+                    self.unique_nums.remove(num)
+
+    def showFirstUnique(self) -> int:
+        """
+        Returns the first unique number.
+
+        Returns:
+            int: The first unique number.
+        """
+        if self.unique_nums:
+            return self.unique_nums[0]
+        return -1
+
+    def add(self, value: int) -> None:
+        """
+        Adds a new number to the stream.
+
+        Args:
+            value (int): The new number.
+        """
+        if value not in self.nums_count:
+            self.nums_count[value] = 1
+            self.unique_nums.append(value)
+        else:
+            self.nums_count[value] += 1
+            if value in self.unique_nums:
+                self.unique_nums.remove(value)
+
+# Example usage
+nums = [2,3,5]
+firstUnique = FirstUnique(nums)
+print(firstUnique.showFirstUnique())  # Output: 2
+
+firstUnique.add(5)
+print(firstUnique.showFirstUnique())  # Output: 2
+
+firstUnique.add(2)
+print(firstUnique.showFirstUnique())  # Output: 3
+
+firstUnique.add(3)
+print(firstUnique.showFirstUnique())  # Output: -1
