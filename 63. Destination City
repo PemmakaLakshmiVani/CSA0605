@@ -1,0 +1,16 @@
+def destCity(paths):
+    """
+    Return the destination city, that is, the city without any path outgoing to another city.
+    """
+    graph = {}
+    for path in paths:
+        cityA, cityB = path
+        if cityA not in graph:
+            graph[cityA] = []
+        if cityB not in graph:
+            graph[cityB] = []
+        graph[cityA].append(cityB)
+    
+    for city in graph:
+        if len(graph[city]) == 0:
+            return city
