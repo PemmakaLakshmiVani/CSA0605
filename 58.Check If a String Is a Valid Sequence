@@ -1,0 +1,25 @@
+class TreeNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+
+class Solution:
+    def isValidSequence(self, root: TreeNode, arr: List[int]) -> bool:
+        """
+        Checks if a string is a valid sequence from root to leaves path in a binary tree.
+
+        Args:
+            root (TreeNode): The root of the binary tree.
+            arr (List[int]): The input array of integers.
+
+        Returns:
+            bool: True if the string is a valid sequence, False otherwise.
+        """
+        def dfs(node: TreeNode, i: int) -> bool:
+            """
+            Helper function to perform DFS traversal.
+
+            Args:
+                node (TreeNode): The current node.
+                i (int): The current index in
