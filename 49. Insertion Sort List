@@ -1,0 +1,49 @@
+class ListNode:
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+
+class Solution:
+    def insertionSortList(self, head: ListNode) -> ListNode:
+        """
+        Sorts a singly linked list using insertion sort.
+
+        Args:
+            head (ListNode): The head of the linked list.
+
+        Returns:
+            ListNode: The head of the sorted linked list.
+        """
+        dummy = ListNode(0)
+        curr = head
+
+        while curr:
+            prev = dummy
+            while prev.next and prev.next.val < curr.val:
+                prev = prev.next
+            temp = curr.next
+            curr.next = prev.next
+            prev.next = curr
+            curr = temp
+
+        return dummy.next
+
+# Example usage
+def printList(head):
+    while head:
+        print(head.val, end=" ")
+        head = head.next
+    print()
+
+# Create the input linked list
+head = ListNode(4)
+head.next = ListNode(2)
+head.next.next = ListNode(1)
+head.next.next.next = ListNode(3)
+
+# Sort the linked list using insertion sort
+solution = Solution()
+head = solution.insertionSortList(head)
+
+# Print the sorted linked list
+printList(head)
