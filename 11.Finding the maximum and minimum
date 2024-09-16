@@ -1,0 +1,29 @@
+def find_max_min(numbers):
+    """
+    This function finds the maximum and minimum of a list of numbers.
+
+    Args:
+        numbers (list): A list of numbers.
+
+    Returns:
+        tuple: A tuple containing the maximum and minimum of the list.
+    """
+    if not numbers:
+        raise ValueError("The list is empty")
+
+    max_num = numbers[0]
+    min_num = numbers[0]
+
+    for num in numbers:
+        if num > max_num:
+            max_num = num
+        elif num < min_num:
+            min_num = num
+
+    return max_num, min_num
+
+# Example usage:
+numbers = [12, 45, 7, 23, 56, 89, 34]
+max_num, min_num = find_max_min(numbers)
+print("Maximum:", max_num)
+print("Minimum:", min_num)
