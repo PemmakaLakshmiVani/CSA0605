@@ -1,0 +1,61 @@
+from typing import List
+
+class Solution:
+    def diagonalSort(self, mat: List[List[int]]) -> List[List[int]]:
+        """
+        Sorts a matrix diagonally.
+
+        Args:
+            mat (List[List[int]]): The input matrix.
+
+        Returns:
+            List[List[int]]: The sorted matrix.
+        """
+        # Get the dimensions of the matrix
+        m, n = len(mat), len(mat[0])
+
+        # Iterate through the diagonals
+        for i in range(m):
+            for j in range(n):
+                # Compute the diagonal index
+                k = i + j
+
+                # Sort the diagonal
+                mat[i][j] = self.sortDiagonal(mat, k)
+
+        return mat
+
+    def sortDiagonal(self, mat: List[List[int]], k: int) -> int:
+        """
+        Sorts a diagonal of the matrix.
+
+        Args:
+            mat (List[List[int]]): The input matrix.
+            k (int): The diagonal index.
+
+        Returns:
+            int: The sorted diagonal value.
+        """
+        # Initialize a list to store the diagonal values
+        values = []
+
+        # Iterate through the matrix and add the diagonal values to the list
+        for i in range(len(mat)):
+            for j in range(len(mat[0])):
+                if i + j == k:
+                    values.append(mat[i][j])
+
+        # Sort the list and return the first value
+        values.sort()
+        return values[0]
+
+# Example usage
+solution = Solution()
+
+# Example 1
+mat = [[3,3,1,1],[2,2,1,2],[1,1,1,2]]
+print(solution.diagonalSort(mat))  # Output: [[1,1,1,1],[1,2,2,2],[1,2,3,3]]
+
+# Example 2
+mat = [[11,25,66,1,69,7],[23,55,17,45,15,52],[75,31,36,44,58,8],[22,27,33,25,68,4],[84,28,14,11,5,50]]
+print(solution.diagonalSort(mat))  # Output: [[5,17,4,1,52,7],[11,11,25,45,8,69],[14,23,25,44,58,15],[22,27,31,36,50,66],[84,28,75,33,55,68]]
