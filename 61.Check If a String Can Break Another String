@@ -1,0 +1,14 @@
+def can_break(s1, s2):
+    """
+    Return True if some permutation of string s1 can break some permutation of string s2 or vice-versa.
+    """
+    s1_sorted = sorted(s1)
+    s2_sorted = sorted(s2)
+    
+    # Check if s1 can break s2
+    can_break_s2 = all(s1_sorted[i] >= s2_sorted[i] for i in range(len(s1)))
+    
+    # Check if s2 can break s1
+    can_break_s1 = all(s2_sorted[i] >= s1_sorted[i] for i in range(len(s2)))
+    
+    return can_break_s1 or can_break_s2
