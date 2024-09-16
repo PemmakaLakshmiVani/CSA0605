@@ -1,0 +1,37 @@
+import math
+
+def getPermutation(n: int, k: int) -> str:
+    """
+    Return the kth permutation sequence.
+    """
+    # Create a list of numbers from 1 to n
+    nums = list(range(1, n + 1))
+    
+    # Initialize an empty string to store the permutation
+    permutation = ""
+    
+    # Calculate the factorial of n
+    factorial = math.factorial(n)
+    
+    # Adjust k to be 1-indexed
+    k -= 1
+    
+    # Iterate from n to 1
+    for i in range(n, 0, -1):
+        # Calculate the factorial of the current number
+        factorial //= i
+        
+        # Calculate the index of the current number in the permutation
+        index = k // factorial
+        
+        # Append the current number to the permutation
+        permutation += str(nums[index])
+        
+        # Remove the current number from the list of numbers
+        nums.pop(index)
+        
+        # Update k
+        k %= factorial
+    
+    # Return the permutation as a string
+    return permutation
