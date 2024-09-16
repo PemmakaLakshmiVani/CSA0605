@@ -1,0 +1,53 @@
+class Solution:
+    def sortColors(self, nums: List[int]) -> None:
+        """
+        Sorts colors in an array in-place.
+
+        Args:
+            nums (List[int]): The input array with colors represented as 0, 1, or 2.
+
+        Returns:
+            None
+        """
+        # Initialize pointers for red, white, and blue colors
+        red, white, blue = 0, 0, len(nums) - 1
+
+        # Iterate through the array
+        while white <= blue:
+            # If the current element is red, swap it with the red pointer
+            if nums[white] == 0:
+                nums[red], nums[white] = nums[white], nums[red]
+                red += 1
+                white += 1
+            # If the current element is white, move the white pointer
+            elif nums[white] == 1:
+                white += 1
+            # If the current element is blue, swap it with the blue pointer
+            else:
+                nums[white], nums[blue] = nums[blue], nums[white]
+                blue -= 1
+
+# Example usage
+def printResult(nums):
+    print("Sorted array:", nums)
+    print()
+
+# Create the input array
+nums = [2, 0, 2, 1, 1, 0]
+
+# Sort the colors
+solution = Solution()
+solution.sortColors(nums)
+
+# Print the result
+printResult(nums)
+
+# Create the input array
+nums = [2, 0, 1]
+
+# Sort the colors
+solution = Solution()
+solution.sortColors(nums)
+
+# Print the result
+printResult(nums)
