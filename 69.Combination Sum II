@@ -1,0 +1,36 @@
+from typing import List
+
+def combinationSum2(candidates: List[int], target: int) -> List[List[int]]:
+    """
+    Return a list of all unique combinations of candidates where the chosen numbers sum to target.
+    Each number in candidates may only be used once in the combination.
+    """
+    def backtrack(remain, comb, start):
+        """
+        Backtrack to find all combinations.
+        """
+        if remain == 0:
+            result.append(list(comb))
+            return
+        elif remain < 0:
+            return
+        else:
+            for i in range(start, len(candidates)):
+                # Skip duplicates
+                if i > start and candidates[i] == candidates[i-1]:
+                    continue
+                comb.append(candidates[i])
+                backtrack(remain - candidates[i], comb, i + 1)
+                comb.pop()
+
+    result = []
+    # Sort candidates and remove duplicates
+    candidates.sort()
+    i = 0
+    while i < len(candidates) - 1:
+        if candidates[i] == candidates[i+1]:
+            del candidates[i]
+        else:
+            i += 1
+    backtrack(target, [], 0)
+    return result
