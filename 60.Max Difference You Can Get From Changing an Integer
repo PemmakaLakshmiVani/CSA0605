@@ -1,0 +1,20 @@
+def max_difference(num):
+    """
+    Return the max difference between a and b, where a and b are the results of
+    applying the operations to num the first and second times, respectively.
+    """
+    num_str = str(num)
+    max_diff = 0
+    for x in range(10):
+        max_a = 0
+        min_b = float('inf')
+        for y in range(10):
+            new_num_str = num_str.replace(str(x), str(y))
+            if new_num_str[0] != '0' and new_num_str != '0':
+                new_num = int(new_num_str)
+                if new_num > max_a:
+                    max_a = new_num
+                if new_num < min_b:
+                    min_b = new_num
+        max_diff = max(max_diff, max_a - min_b)
+    return max_diff
