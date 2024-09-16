@@ -1,0 +1,45 @@
+class Solution:
+    def leftMostColumnWithOne(self, binaryMatrix: 'BinaryMatrix') -> int:
+        """
+        Finds the leftmost column with at least a one in a row-sorted binary matrix.
+
+        Args:
+            binaryMatrix (BinaryMatrix): The binary matrix.
+
+        Returns:
+            int: The index (0-indexed) of the leftmost column with a 1 in it. If such an index does not exist, return -1.
+        """
+        rows, cols = binaryMatrix.dimensions()
+        min_col = cols
+
+        # Iterate through each row
+        for row in range(rows):
+            # Perform a binary search to find the leftmost 1 in the row
+            left, right = 0, cols - 1
+            while left <= right:
+                mid = (left + right) // 2
+                if binaryMatrix.get(row, mid) == 1:
+                    right = mid - 1
+                    min_col = min(min_col, mid)
+                else:
+                    left = mid + 1
+
+        return min_col if min_col < cols else -1
+
+# Example usage
+solution = Solution()
+
+# Example 1
+mat = [[0,0],[1,1]]
+binaryMatrix = BinaryMatrix(mat)
+print(solution.leftMostColumnWithOne(binaryMatrix))  # Output: 0
+
+# Example 2
+mat = [[0,0],[0,1]]
+binaryMatrix = BinaryMatrix(mat)
+print(solution.leftMostColumnWithOne(binaryMatrix))  # Output: 1
+
+# Example 3
+mat = [[0,0],[0,0]]
+binaryMatrix = BinaryMatrix(mat)
+print(solution.leftMostColumnWithOne(binaryMatrix))  # Output: -1
