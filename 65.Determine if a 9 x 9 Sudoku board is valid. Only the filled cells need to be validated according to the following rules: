@@ -1,0 +1,24 @@
+def isValidSudoku(board):
+    """
+    Determine if a 9 x 9 Sudoku board is valid.
+    """
+    # Check each row
+    for row in board:
+        nums = [x for x in row if x != "."]
+        if len(nums) != len(set(nums)):
+            return False
+
+    # Check each column
+    for col in range(9):
+        nums = [board[row][col] for row in range(9) if board[row][col] != "."]
+        if len(nums) != len(set(nums)):
+            return False
+
+    # Check each 3x3 sub-box
+    for i in range(0, 9, 3):
+        for j in range(0, 9, 3):
+            nums = [board[x][y] for x in range(i, i+3) for y in range(j, j+3) if board[x][y] != "."]
+            if len(nums) != len(set(nums)):
+                return False
+
+    return True
