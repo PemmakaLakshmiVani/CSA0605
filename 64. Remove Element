@@ -1,0 +1,11 @@
+nums = [3,2,2,3]
+val = 3
+k = removeElement(nums, val)
+print(k)  # 2
+print(nums[:k])  # [2, 2]
+
+nums = [0,1,2,2,3,0,4,2]
+val = 2
+k = removeElement(nums, val)
+print(k)  # 5
+print(nums[:k])  # [0, 1, 4, 0, 3]
