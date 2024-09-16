@@ -1,0 +1,40 @@
+from collections import Counter
+
+class Solution:
+    def frequencySort(self, s: str) -> str:
+        """
+        Sorts a string in decreasing order based on the frequency of the characters.
+
+        Args:
+            s (str): The input string.
+
+        Returns:
+            str: The sorted string.
+        """
+        # Count the frequency of each character
+        freq = Counter(s)
+
+        # Sort the characters by frequency in descending order
+        sorted_chars = sorted(freq.items(), key=lambda x: x[1], reverse=True)
+
+        # Build the sorted string
+        sorted_str = ''
+        for char, count in sorted_chars:
+            sorted_str += char * count
+
+        return sorted_str
+
+# Example usage
+solution = Solution()
+
+# Example 1
+s = "tree"
+print(solution.frequencySort(s))  # Output: "eert"
+
+# Example 2
+s = "cccaaa"
+print(solution.frequencySort(s))  # Output: "aaaccc"
+
+# Example 3
+s = "Aabb"
+print(solution.frequencySort(s))  # Output: "bbAa"
