@@ -1,0 +1,37 @@
+def find_median(nums1, nums2):
+    # Calculate the total length of the combined array
+    total_length = len(nums1) + len(nums2)
+    
+    # If the total length is odd, the median is the middle element
+    # If the total length is even, the median is the average of the two middle elements
+    half_length = total_length // 2
+    
+    # Initialize the low and high pointers for binary search
+    low = 0
+    high = len(nums1) - 1
+    
+    while True:
+        # Calculate the partition point for nums1
+        i = (low + high) // 2
+        # Calculate the partition point for nums2
+        j = half_length - i - 2
+        
+        # Get the elements at the partition points
+        nums1_left = nums1[i] if i >= 0 else float('-infinity')
+        nums1_right = nums1[i + 1] if (i + 1) < len(nums1) else float('infinity')
+        nums2_left = nums2[j] if j >= 0 else float('-infinity')
+        nums2_right = nums2[j + 1] if (j + 1) < len(nums2) else float('infinity')
+        
+        # Check if the partition is correct
+        if nums1_left <= nums2_right and nums2_left <= nums1_right:
+            # If the total length is odd, return the max of the left elements
+            if total_length % 2:
+                return max(nums1_left, nums2_left)
+            # If the total length is even, return the average of the max of the left elements and the min of the right elements
+            else:
+                return (max(nums1_left, nums2_left) + min(nums1_right, nums2_right)) / 2
+        # If the partition is not correct, adjust the pointers
+        elif nums1_left > nums2_right:
+            high = i - 1
+        else:
+            low = i + 1
