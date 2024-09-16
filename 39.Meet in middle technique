@@ -1,0 +1,49 @@
+def median_of_three(arr, i):
+    """Find the median of three elements in the array."""
+    a = arr[i]
+    b = arr[i + (len(arr) - 1) // 5]
+    c = arr[i + 2 * ((len(arr) - 1) // 5)]
+    if a <= b <= c or c <= b <= a:
+        return b
+    if b <= a <= c or c <= a <= b:
+        return a
+    return c
+
+def partition(arr, pivot):
+    """Partition the array around the pivot element."""
+    i = 0
+    j = len(arr) - 1
+    while True:
+        while arr[i] < pivot:
+            i += 1
+        while arr[j] > pivot:
+            j -= 1
+        if i >= j:
+            return i
+        arr[i], arr[j] = arr[j], arr[i]
+        i += 1
+        j -= 1
+
+def median_of_medians_recursive(arr):
+    """Find the median of medians recursively."""
+    if len(arr) <= 5:
+        return sorted(arr)[len(arr) // 2]
+
+    medians = [median_of_three(arr, i) for i in range(0, len(arr) - 2, 5)]
+    pivot = median_of_medians_recursive(medians)
+    k = partition(arr, pivot)
+    if k == len(arr) // 2:
+        return arr[k]
+    elif k < len(arr) // 2:
+        return median_of_medians_recursive(arr[k + 1:])
+    else:
+        return median_of_medians_recursive(arr[:k])
+
+def median_of_medians(arr):
+    """Find the median of medians using the median of medians algorithm."""
+    return median_of_medians_recursive(arr)
+
+# Example usage
+arr = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]
+median = median_of_medians(arr)
+print("Median of medians:", median)
