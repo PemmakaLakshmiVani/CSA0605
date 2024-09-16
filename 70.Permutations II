@@ -1,0 +1,25 @@
+from typing import List
+
+def permuteUnique(nums: List[int]) -> List[List[int]]:
+    """
+    Return all possible unique permutations of the input list.
+    """
+    def backtrack(start, end):
+        """
+        Backtrack to find all permutations.
+        """
+        if start == end:
+            result.append(nums[:])
+        else:
+            for i in range(start, end):
+                # Skip duplicates
+                if nums[i] in nums[start:i]:
+                    continue
+                nums[start], nums[i] = nums[i], nums[start]
+                backtrack(start + 1, end)
+                nums[start], nums[i] = nums[i], nums[start]
+
+    result = []
+    nums.sort()
+    backtrack(0, len(nums))
+    return result
