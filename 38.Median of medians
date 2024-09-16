@@ -1,0 +1,14 @@
+def median_of_medians_recursive(arr):
+    """Find the median of medians recursively."""
+    if len(arr) <= 5:
+        return sorted(arr)[len(arr) // 2]
+
+    medians = [median_of_three(arr, i) for i in range(0, len(arr) - 2, 5)]
+    pivot = median_of_medians_recursive(medians)
+    k = partition(arr, pivot)
+    if k == len(arr) // 2:
+        return arr[k]
+    elif k < len(arr) // 2:
+        return median_of_medians_recursive(arr[k + 1:])
+    else:
+        return median_of_medians_recursive(arr[:k])
