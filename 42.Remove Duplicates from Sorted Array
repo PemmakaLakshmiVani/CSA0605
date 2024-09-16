@@ -1,0 +1,43 @@
+class Solution:
+    def removeDuplicates(self, nums: List[int]) -> int:
+        # If the array is empty, return 0
+        if not nums:
+            return 0
+
+        # Initialize two pointers, one for the current element and one for the next element
+        i = 0
+        for j in range(1, len(nums)):
+            # If the current element is different from the next element, move the next element to the current position
+            if nums[j] != nums[i]:
+                i += 1
+                nums[i] = nums[j]
+
+        # Return the length of the array without duplicates
+        return i + 1
+
+# Example usage
+def printArray(nums, k):
+    print("Array after removing duplicates:")
+    for i in range(k):
+        print(nums[i], end=" ")
+    print()
+
+# Create the input array
+nums = [1, 1, 2]
+
+# Remove duplicates from the array
+solution = Solution()
+k = solution.removeDuplicates(nums)
+
+# Print the array after removing duplicates
+printArray(nums, k)
+
+# Create the input array
+nums = [0, 0, 1, 1, 1, 2, 2, 3, 3, 4]
+
+# Remove duplicates from the array
+solution = Solution()
+k = solution.removeDuplicates(nums)
+
+# Print the array after removing duplicates
+printArray(nums, k)
