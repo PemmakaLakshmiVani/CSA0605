@@ -1,0 +1,29 @@
+def find_peak_element(nums):
+    """
+    Given a 0-indexed integer array nums, find a peak element, and return its index.
+    If the array contains multiple peaks, return the index to any of the peaks.
+    """
+    # Initialize the low and high indices for the binary search
+    low = 0
+    high = len(nums) - 1
+    
+    # Loop until we find a peak element
+    while low <= high:
+        # Calculate the mid index
+        mid = (low + high) // 2
+        
+        # Check if the mid element is a peak element
+        if (mid == 0 or nums[mid] > nums[mid - 1]) and (mid == len(nums) - 1 or nums[mid] > nums[mid + 1]):
+            # If it's a peak element, return its index
+            return mid
+        elif mid > 0 and nums[mid] < nums[mid - 1]:
+            # If the mid element is not a peak element, but the previous element is greater,
+            # then the peak element must be in the left half
+            high = mid - 1
+        else:
+            # If the mid element is not a peak element, and the previous element is not greater,
+            # then the peak element must be in the right half
+            low = mid + 1
+    
+    # If we reach this point, it means we didn't find a peak element (which is impossible)
+    raise ValueError("No peak element found")
