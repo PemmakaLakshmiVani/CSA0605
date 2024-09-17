@@ -1,0 +1,24 @@
+def find_kth_missing(arr, k):
+    """
+    Given a sorted array of positive integers and an integer k,
+    return the kth positive integer that is missing from the array.
+    """
+    # Initialize a counter for the missing integers
+    missing_count = 0
+    
+    # Initialize a variable to keep track of the current integer
+    current = 1
+    
+    # Loop until we find the kth missing integer
+    while True:
+        # Check if the current integer is in the array
+        if current not in arr:
+            # If it's not in the array, increment the missing count
+            missing_count += 1
+            
+            # If we've reached the kth missing integer, return it
+            if missing_count == k:
+                return current
+        
+        # Increment the current integer
+        current += 1
