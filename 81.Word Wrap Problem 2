@@ -1,0 +1,22 @@
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.indices = []
+
+class WordFilter:
+    def __init__(self, words):
+        self.trie = {}
+        for i, word in enumerate(words):
+            for j in range(len(word) + 1):
+                prefix = word[:j]
+                suffix = word[j:]
+                if prefix not in self.trie:
+                    self.trie[prefix] = {}
+                if suffix not in self.trie[prefix]:
+                    self.trie[prefix][suffix] = []
+                self.trie[prefix][suffix].append(i)
+
+    def f(self, pref, suff):
+        if pref not in self.trie or suff not in self.trie[pref]:
+            return -1
+        return max(self.trie[pref][suff])
