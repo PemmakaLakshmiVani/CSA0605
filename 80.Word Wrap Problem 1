@@ -1,0 +1,14 @@
+def fullJustify(words, maxWidth):
+    result, current_line, current_width = [], [], 0
+    for word in words:
+        if current_width + len(word) + len(current_line) > maxWidth:
+            if len(current_line) == 1:
+                result.append(current_line[0] + ' ' * (maxWidth - len(current_line[0])))
+            else:
+                total_spaces, extra_spaces = divmod(maxWidth - sum(len(w) for w in current_line), len(current_line) - 1)
+                result.append((' ' * (total_spaces + 1)).join(current_line) + ' ' * extra_spaces)
+            current_line, current_width = [], 0
+        current_line.append(word)
+        current_width += len(word)
+    result.append(' '.join(current_line) + ' ' * (maxWidth - len(' '.join(current_line))))
+    return result
