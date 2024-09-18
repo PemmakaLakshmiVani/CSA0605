@@ -1,0 +1,43 @@
+def floyd_warshall(n, times):
+    dist = [[float('inf')] * (n + 1) for _ in range(n + 1)]
+
+    for i in range(1, n + 1):
+        dist[i][i] = 0
+
+    for u, v, w in times:
+        dist[u][v] = min(dist[u][v], w)
+
+    for k in range(1, n + 1):
+        for i in range(1, n + 1):
+            for j in range(1, n + 1):
+                if dist[i][j] > dist[i][k] + dist[k][j]:
+                    dist[i][j] = dist[i][k] + dist[k][j]
+
+    return dist
+
+def networkDelayTime(times, n, k):
+    dist = floyd_warshall(n, times)
+
+    max_time = 0
+    for j in range(1, n + 1):
+        if dist[k][j] == float('inf'):
+            return -1
+        max_time = max(max_time, dist[k][j])
+
+    return max_time
+
+# Example usage
+times1 = [[2, 1, 1], [2, 3, 1], [3, 4, 1]]
+n1 = 4
+k1 = 2
+print(networkDelayTime(times1, n1, k1))  # Output: 2
+
+times2 = [[1, 2, 1]]
+n2 = 2
+k2 = 1
+print(networkDelayTime(times2, n2, k2))  # Output: 1
+
+times3 = [[1, 2, 1]]
+n3 = 2
+k3 = 2
+print(networkDelayTime(times3, n3, k3))  # Output: -1
