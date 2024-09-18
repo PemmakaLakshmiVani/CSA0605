@@ -1,0 +1,50 @@
+import heapq
+from collections import defaultdict
+
+def maxProbability(n, edges, succProb, start, end):
+    graph = defaultdict(list)
+    
+    for (a, b), prob in zip(edges, succProb):
+        graph[a].append((b, prob))
+        graph[b].append((a, prob))
+    
+    max_prob = [0] * n
+    max_prob[start] = 1
+    priority_queue = [(-1, start)]  # Use a max-heap, hence store negative probabilities
+    
+    while priority_queue:
+        current_prob, current_node = heapq.heappop(priority_queue)
+        current_prob = -current_prob  # Convert back to positive probability
+        
+        if current_node == end:
+            return current_prob
+        
+        for neighbor, prob in graph[current_node]:
+            new_prob = current_prob * prob
+            if new_prob > max_prob[neighbor]:
+                max_prob[neighbor] = new_prob
+                heapq.heappush(priority_queue, (-new_prob, neighbor))
+    
+    return 0
+
+# Example usage
+n1 = 3
+edges1 = [[0, 1], [1, 2], [0, 2]]
+succProb1 = [0.5, 0.5, 0.2]
+start1 = 0
+end1 = 2
+print(maxProbability(n1, edges1, succProb1, start1, end1))  # Output: 0.25000
+
+n2 = 3
+edges2 = [[0, 1], [1, 2], [0, 2]]
+succProb2 = [0.5, 0.5, 0.3]
+start2 = 0
+end2 = 2
+print(maxProbability(n2, edges2, succProb2, start2, end2))  # Output: 0.30000
+
+n3 = 3
+edges3 = [[0, 1]]
+succProb3 = [0.5]
+start3 = 0
+end3 = 2
+print(maxProbability(n3, edges3, succProb3, start3, end3))  # Output: 0.00000
