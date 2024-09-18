@@ -1,0 +1,42 @@
+def is_safe(graph, colors, vertex, color):
+    for neighbor in graph[vertex]:
+        if colors[neighbor] == color:
+            return False
+    return True
+
+def graph_coloring_util(graph, m, colors, vertex, max_colored):
+    if vertex == len(graph):
+        return max_colored
+
+    max_colored_with_current = max_colored
+    for color in range(1, m + 1):
+        if is_safe(graph, colors, vertex, color):
+            colors[vertex] = color
+            colored_count = graph_coloring_util(graph, m, colors, vertex + 1, max_colored + 1)
+            max_colored_with_current = max(max_colored_with_current, colored_count)
+            colors[vertex] = 0  # Backtrack
+
+    # Explore the option of not coloring this vertex
+    colored_count = graph_coloring_util(graph, m, colors, vertex + 1, max_colored)
+    max_colored_with_current = max(max_colored_with_current, colored_count)
+
+    return max_colored_with_current
+
+def graph_coloring(graph, m):
+    colors = [0] * len(graph)
+    return graph_coloring_util(graph, m, colors, 0, 0)
+
+# Representing the graph as an adjacency list
+graph = {
+    0: [1, 3, 2],
+    1: [0, 2],
+    2: [1, 3, 0],
+    3: [0, 2]
+}
+
+# Number of colors (m) needed
+num_colors = 3
+
+# Find the maximum number of regions you can color
+max_colored_regions = graph_coloring(graph, num_colors)
+print(f"Maximum number of regions you can color: {max_colored_regions}")
