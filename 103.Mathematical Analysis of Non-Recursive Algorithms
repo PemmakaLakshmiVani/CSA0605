@@ -1,0 +1,22 @@
+def climbStairs(n):
+    if n == 0 or n == 1:
+        return 1
+    
+    # Initialize base cases
+    prev2, prev1 = 1, 1
+    
+    # Iterate from step 2 to step n
+    for i in range(2, n + 1):
+        current = prev1 + prev2  # Calculate the number of ways to reach step i
+        prev2 = prev1  # Update prev2 to the previous step
+        prev1 = current  # Update prev1 to the current step
+    
+    return prev1
+
+# Example 1
+n1 = 4
+print(f"Number of distinct ways to climb {n1} steps: {climbStairs(n1)}")
+
+# Example 2
+n2 = 3
+print(f"Number of distinct ways to climb {n2} steps: {climbStairs(n2)}")
