@@ -1,0 +1,42 @@
+def findPaths(m, n, N, i, j):
+    # Modulo for large numbers
+    MOD = 1000000007
+    
+    # DP table with dimensions (N + 1) x m x n
+    dp = [[[0] * n for _ in range(m)] for _ in range(N + 1)]
+    
+    # Base case: 0 steps left, no way to move out
+    dp[0][i][j] = 1
+    
+    # Directions for moving: up, down, left, right
+    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+    
+    # Number of ways to move out of bounds
+    total_ways = 0
+    
+    # Iterate through each step
+    for step in range(1, N + 1):
+        # Temporary DP table for current step
+        temp = [[0] * n for _ in range(m)]
+        
+        # Update the DP table for each cell
+        for x in range(m):
+            for y in range(n):
+                for direction in directions:
+                    nx, ny = x + direction[0], y + direction[1]
+                    
+                    # If the move takes the ball out of bounds, count it
+                    if nx < 0 or nx >= m or ny < 0 or ny >= n:
+                        total_ways = (total_ways + dp[step - 1][x][y]) % MOD
+                    # If the move is within bounds, update the DP table
+                    else:
+                        temp[nx][ny] = (temp[nx][ny] + dp[step - 1][x][y]) % MOD
+        
+        # Update dp table for the current step
+        dp[step] = temp
+    
+    return total_ways
+
+# Example 1
+m1, n1, N1, i1, j1 = 2, 2, 2, 0, 0
+print(f"Number of ways to move the ball out for m={m1
