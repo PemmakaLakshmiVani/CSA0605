@@ -1,0 +1,35 @@
+def subsets_with_duplicates(S):
+    # Sort the list to ensure lexicographical order and handle duplicates
+    S.sort()
+    
+    result = []
+    subset = []
+    
+    # Backtracking function to generate subsets
+    def backtrack(start):
+        # Add a copy of the current subset to the result
+        result.append(subset[:])
+        
+        # Iterate over all elements starting from the current index
+        for i in range(start, len(S)):
+            # If the current element is the same as the previous one, skip it to avoid duplicates
+            if i > start and S[i] == S[i - 1]:
+                continue
+            # Include S[i] in the subset
+            subset.append(S[i])
+            # Recur with the next element
+            backtrack(i + 1)
+            # Exclude S[i] from the subset (backtrack)
+            subset.pop()
+    
+    # Start backtracking from the first index
+    backtrack(0)
+    
+    return result
+
+# Example usage
+A = [1, 2, 3]
+subsets = subsets_with_duplicates(A)
+print("Subsets of [1, 2, 3]:")
+for subset in subsets:
+    print(subset)
