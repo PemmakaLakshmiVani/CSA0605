@@ -1,0 +1,42 @@
+def rob_linear(nums):
+    """Helper function to calculate max money that can be robbed in a linear arrangement of houses."""
+    n = len(nums)
+    if n == 0:
+        return 0
+    if n == 1:
+        return nums[0]
+    
+    # Initialize the first two values for DP
+    prev2, prev1 = 0, 0
+    
+    for num in nums:
+        current = max(prev1, prev2 + num)
+        prev2 = prev1
+        prev1 = current
+    
+    return prev1
+
+def rob(nums):
+    n = len(nums)
+    
+    if n == 0:
+        return 0
+    if n == 1:
+        return nums[0]
+    
+    # Case 1: Exclude the last house, consider from house 0 to n-2
+    case1 = rob_linear(nums[:-1])
+    
+    # Case 2: Exclude the first house, consider from house 1 to n-1
+    case2 = rob_linear(nums[1:])
+    
+    # The result is the maximum of both cases
+    return max(case1, case2)
+
+# Example 1
+nums1 = [2, 3, 2]
+print(f"Maximum money that can be robbed for {nums1}: {rob(nums1)}")
+
+# Example 2
+nums2 = [1, 2, 3, 1]
+print(f"Maximum money that can be robbed for {nums2}: {rob(nums2)}")
