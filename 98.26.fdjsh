@@ -1,0 +1,35 @@
+def subsets_with_element(S, x):
+    # Sort the list to generate subsets in lexicographical order
+    S.sort()
+    
+    result = []
+    subset = []
+    
+    # Backtracking function to generate subsets
+    def backtrack(start):
+        # Add the current subset to the result if it contains the element x
+        if x in subset:
+            result.append(subset[:])
+        
+        # Iterate over all elements starting from the current index
+        for i in range(start, len(S)):
+            # Include S[i] in the subset
+            subset.append(S[i])
+            # Recur with the next element
+            backtrack(i + 1)
+            # Exclude S[i] from the subset (backtrack)
+            subset.pop()
+    
+    # Start backtracking from the first index
+    backtrack(0)
+    
+    return result
+
+# Example usage
+E = [2, 3, 4, 5]
+x = 3
+subsets = subsets_with_element(E, x)
+
+print("Subsets containing 3:")
+for subset in subsets:
+    print(subset)
