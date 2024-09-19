@@ -1,0 +1,49 @@
+def median_of_medians(arr, k):
+    def partition(arr, pivot):
+        less = []
+        equal = []
+        greater = []
+        for num in arr:
+            if num < pivot:
+                less.append(num)
+            elif num == pivot:
+                equal.append(num)
+            else:
+                greater.append(num)
+        return less, equal, greater
+
+    def select(arr, k):
+        if len(arr) <= 5:
+            return sorted(arr)[k]
+        
+        # Step 1: Divide into groups of 5 and find the median of each group
+        medians = []
+        for i in range(0, len(arr), 5):
+            group = arr[i:i + 5]
+            medians.append(sorted(group)[len(group) // 2])
+        
+        # Step 2: Find the median of medians
+        pivot = select(medians, len(medians) // 2)
+        
+        # Step 3: Partition the array around the pivot
+        less, equal, greater = partition(arr, pivot)
+        
+        # Step 4: Recurse into the appropriate partition
+        if k < len(less):
+            return select(less, k)
+        elif k < len(less) + len(equal):
+            return pivot
+        else:
+            return select(greater, k - len(less) - len(equal))
+    
+    return select(arr, k - 1)  # k is 1-based index, adjust to 0-based
+
+# Example 1
+arr1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+k1 = 6
+print(f"The {k1}-th smallest element is: {median_of_medians(arr1, k1)}")
+
+# Example 2
+arr2 = [23, 17, 31, 44, 55, 21, 20, 18, 19, 27]
+k2 = 5
+print(f"The {k2}-th smallest element is: {median_of_medians(arr2, k2)}")
