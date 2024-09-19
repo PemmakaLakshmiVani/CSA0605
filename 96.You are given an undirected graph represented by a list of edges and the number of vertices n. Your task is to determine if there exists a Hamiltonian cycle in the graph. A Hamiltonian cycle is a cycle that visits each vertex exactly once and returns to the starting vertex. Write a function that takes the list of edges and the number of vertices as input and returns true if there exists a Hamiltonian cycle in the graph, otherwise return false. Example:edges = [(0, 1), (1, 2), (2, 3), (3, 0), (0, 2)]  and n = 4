@@ -1,0 +1,60 @@
+def is_safe(v, graph, path, pos):
+    # Check if the current vertex is adjacent to the previous vertex in the path
+    if graph[path[pos - 1]][v] == 0:
+        return False
+
+    # Check if the vertex has already been included in the path
+    if v in path:
+        return False
+
+    return True
+
+def hamiltonian_cycle_util(graph, path, pos, n):
+    # Base case: If all vertices are included in the path
+    if pos == n:
+        # Last vertex must be adjacent to the first to form a cycle
+        return graph[path[pos - 1]][path[0]] == 1
+
+    # Try different vertices as the next candidate in the path
+    for v in range(1, n):
+        if is_safe(v, graph, path, pos):
+            path[pos] = v
+
+            # Recur to construct the rest of the path
+            if hamiltonian_cycle_util(graph, path, pos + 1, n):
+                return True
+
+            # If adding vertex v doesn't lead to a solution, remove it (backtrack)
+            path[pos] = -1
+
+    return False
+
+def hamiltonian_cycle(n, edges):
+    # Create an adjacency matrix to represent the graph
+    graph = [[0] * n for _ in range(n)]
+    
+    # Add edges to the adjacency matrix
+    for u, v in edges:
+        graph[u][v] = 1
+        graph[v][u] = 1  # Undirected graph
+
+    # Initialize path with -1 (indicating unvisited vertices)
+    path = [-1] * n
+
+    # Start the path from vertex 0
+    path[0] = 0
+
+    # Use backtracking to find a Hamiltonian cycle
+    if not hamiltonian_cycle_util(graph, path, 1, n):
+        return False
+
+    return True
+
+# Example usage:
+edges = [(0, 1), (1, 2), (2, 3), (3, 0), (0, 2)]
+n = 4
+
+if hamiltonian_cycle(n, edges):
+    print("Hamiltonian Cycle exists")
+else:
+    print("Hamiltonian Cycle does not exist")
