@@ -1,0 +1,35 @@
+def is_substring(s1, s2):
+    """Check if s1 is a substring of s2."""
+    len1 = len(s1)
+    len2 = len(s2)
+
+    # Loop through s2 to check for s1
+    for i in range(len2 - len1 + 1):
+        match = True
+        for j in range(len1):
+            if s1[j] != s2[i + j]:
+                match = False
+                break
+        if match:
+            return True
+    return False
+
+def find_substrings(words):
+    substrings = set()  # Use a set to avoid duplicates
+    
+    for i in range(len(words)):
+        for j in range(len(words)):
+            if i != j and is_substring(words[i], words[j]):
+                substrings.add(words[i])
+                
+    return list(substrings)
+
+# Example usage
+words1 = ["mass", "as", "hero", "superhero"]
+print(find_substrings(words1))  # Output: ["as", "hero"]
+
+words2 = ["leetcode", "et", "code"]
+print(find_substrings(words2))  # Output: ["et", "code"]
+
+words3 = ["blue", "green", "bu"]
+print(find_substrings(words3))  # Output: []
